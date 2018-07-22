@@ -88,7 +88,7 @@ class MenuCategoriesController extends Controller
 
         $id = $menucategory->id;
         $res = DB::select("select goods_name from menus WHERE category_id=?",[$id]);
-
+dd($res);
 
         if ($res==null){//判断文章类中是否存在文章,不存在就删除
             $menucategory->delete();

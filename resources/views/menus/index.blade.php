@@ -3,6 +3,27 @@
     @include('_left')
 @section('content_right')
     <h3>--菜品列表--</h3>
+    @foreach($menuCategories as $val)
+    <a href="{{ route('menus.index',['id'=>$val->id]) }}"class="btn btn-success">{{$val->name}}</a>
+    @endforeach
+<div>
+    {{--<a href="{{route('activies.index',['status'=>'end'])}}"class="btn btn-danger">已结束活动</a>--}}
+
+
+    <div class="pull-right">
+
+        <form class="navbar-form navbar-left" action="{{route('menus.index')}}" method="get">
+            <div class="form-group" >
+                <input type="text" name="keywords" class="form-control" width="20px" value="{{old('keywords')}}" placeholder="菜品名称">
+                <input type="text" name="min_price" class="form-control" width="20px" value="{{old('min_price')}}" placeholder="开始价格">
+                -<input type="text"name="max_price" class="form-control" value="{{old('max_price')}}" placeholder="结束价格">
+            </div>
+            <button type="submit" class="btn btn-default btn-info" >搜索</button>
+        </form>
+    </div>
+</div>
+
+
     <table class="table table-hover">
         <tr class="info">
             <th>菜品ID</th>
@@ -35,7 +56,8 @@
                 <td>{{$val->tips}}</td>
                 <td>{{$val->satisfy_count}}</td>
                 <td>{{$val->satisfy_rate}}</td>
-                <td><img src="{{$val->goods_img}}" alt="" width="100px"></td>
+                {{--<td><img src="{{$val->goods_img}}" alt="" width="100px"></td>--}}
+                <td><img src="{{ $val->goods_img }}" alt="" width="100px"></td>
 
                 <td>
                     &emsp;
@@ -62,7 +84,9 @@
             </tr>
         @endforeach
     </table>
-
+    {{--{{$articles->appends(['author'=>$article->author])->links()}}--}}
+    {{$menus->appends($wheres)->links()}}
+    {{--{{$menus->links()}}--}}
 
     @stop
 @stop

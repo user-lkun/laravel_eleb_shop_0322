@@ -7,8 +7,17 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Shop</title>
 
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.js"></script>
+
     <!-- Bootstrap -->
     <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/web_uploader/webuploader.css">
+
+    <script type="text/javascript" src="/web_uploader/webuploader.js"></script>
 </head>
 <body >
 <div class="container">
@@ -28,7 +37,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class=""><a href="#">商户后台 <span class="sr-only">(current)</span></a></li>
+                    <li class=""><a href="{{route('shops.index')}}">商户首页 <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">下载</a></li>
 
                 </ul>
@@ -109,9 +118,8 @@
         </div>
     </div>
 
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="/js/jquery-3.2.1.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="/js/bootstrap.js"></script>
+
+
+
 </body>
 </html>

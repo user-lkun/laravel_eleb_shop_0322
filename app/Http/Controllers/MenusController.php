@@ -16,9 +16,33 @@ class MenusController extends Controller
 
         ]);
     }
-    public function index(){
-        $menus = Menu::where('shop_id',Auth::user()->shop_id)->paginate();
-        return  view('menus/index',compact('menus'));
+
+    public function index(Request $request){
+        $wheres = [];
+        if($request->id){
+//            $wheres['category_id']=$request->id;
+            $wheres[] = ['category_id',$request->id];
+        }
+        if ($request->keywords){
+//            $wheres['goods_name']=$request->goods_name;
+            $wheres[] = ['goods_name','like','%'.$request->keywords.'%'];
+        }
+
+        if ($request->min_price || $request->max_price){
+            $menus = Menu::where('shop_id',Auth::user()->shop_id)
+                ->where($wheres)
+                ->where('goods_price','<',$request->max_price)
+                ->where('or')
+                ->where('goods_price','>',$request->min_price)
+                ->paginate(3);
+        }else{
+            $menus = Menu::where('shop_id',Auth::user()->shop_id)
+                ->where($wheres)
+                ->paginate(3);
+        }
+//dd('123');
+        $menuCategories = MenuCategories::where('shop_id',Auth::user()->shop_id)->paginate();
+        return  view('menus/index',compact('menus','menuCategories','wheres'));
     }
     public function create(){
         $menus_categories = MenuCategories::where('shop_id',Auth::user()->shop_id)->paginate();
@@ -40,12 +64,14 @@ class MenusController extends Controller
             'goods_img.required'=>'图片不能为空',
         ]);
         //处理图片
-        $file = $request->goods_img;
-        $head_name = $file->store('public/logo');
-        $img  = Storage::url($head_name);
-        $true_path = url($img);
-        //给默认值
-        $rating=0;
+        //将图片传至阿里云
+        //$storage = Storage::disk('oss');
+       // $goods_img = $storage->putFile('goods_img', $request->goods_img);
+//        $file = $request->goods_img;
+//        $head_name = $file->store('public/logo');
+//        $img  = Storage::url($head_name);
+       // $true_path =$storage-> url($goods_img);
+
         Menu::create([
             'goods_name'=>$request->goods_name,
             'rating'=>0,
@@ -58,7 +84,7 @@ class MenusController extends Controller
             'tips'=>0,
             'satisfy_count'=>0,
             'satisfy_rate'=>0,
-            'goods_img'=>$true_path,
+            'goods_img'=>$request->goods_img,
         ]);
 
         //添加成功,设置提示信息
@@ -85,11 +111,14 @@ class MenusController extends Controller
             'goods_price.numeric'=>'请输入正确的价格',
         ]);
         //处理图片
-        $file = $request->goods_img;
-        if ($file!=null){//上传了新图片
-            $head_name = $file->store('public/logo');
-            $img  = Storage::url($head_name);
-            $true_path = url($img);
+
+
+
+        if ($request->goods_img!=null){//上传了新图片
+            //将图片传至阿里云
+            //$storage = Storage::disk('oss');
+            //$goods_img = $storage->putFile('goods_img', $request->goods_img);
+            //$true_path =$storage->url($goods_img);//保存真实路径
             //给默认值
 //        $rating=0;
             $menu->update([
@@ -104,7 +133,7 @@ class MenusController extends Controller
 //            'tips'=>0,
 //            'satisfy_count'=>0,
 //            'satisfy_rate'=>0,
-                'goods_img'=>$true_path,
+                'goods_img'=>$request->goods_img,
             ]);
         }else{
             $menu->update([

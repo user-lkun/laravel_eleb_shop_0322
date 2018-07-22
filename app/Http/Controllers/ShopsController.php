@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth',[
-            'only'=>['store']
-        ]);
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth',[
+//            'only'=>['store']
+//        ]);
+//    }
 
     public function index(){
         return view('shops/index');
@@ -81,11 +81,11 @@ class ShopsController extends Controller
         ]);
 
         //处理图片
-        $shop_img = $request->shop_img;
-        $shop_img_name = $shop_img->store('public/shop_img');
+       // $shop_img = $request->shop_img;
+        //$shop_img_name = $shop_img->store('public/shop_img');
         //图片存绝对路劲
-        $img = Storage::url($shop_img_name);
-        $true_path = url($img);
+        //$img = Storage::url($shop_img_name);
+        //$true_path = url($img);
 
 
         if ($request->password!=$request->repassword){
@@ -102,7 +102,7 @@ class ShopsController extends Controller
         DB::beginTransaction();
         $shopsave = Shops::create(['shop_category_id'=> $request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>$true_path,
+            'shop_img'=>$request->shop_img,
             'shop_rating'=>$shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,
@@ -131,7 +131,7 @@ class ShopsController extends Controller
 
         DB::rollBack();
         //添加成功,设置提示信息
-        session()->flash('success','添加成功');
+        session()->flash('success','提交审核成功,请保持手机畅通!');
         return redirect("shops");
 
     }

@@ -16,7 +16,7 @@
         @foreach($menu_categories as $val)
             <tr>
                 <td>{{$val->id}}</td>
-                <td>{{$val->name}}</td>
+                <td><a href="{{ route('menus.index',['id'=>$val->id]) }}" title="点击查看">{{$val->name}}</a></td>
                 <td>{{auth()->user()->shops->shop_name}}</td>
                 <td>{{$val->description}}</td>
                 <td>{{$val->is_selected==1?'是':'否'}}</td>

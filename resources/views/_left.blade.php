@@ -1,4 +1,16 @@
 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+
+            <div class="btn-group" role="group">
+                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    平台活动
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop3">
+                    <li><a href="{{route('activies.index')}}">查看活动列表</a></li>
+                    {{--<li><a href="{{route('articies.show')}}">点击查看活动详情</a></li>--}}
+                </ul>
+            </div>
+
             <div class="btn-group" role="group">
                 <button id="btnGroupVerticalDrop3" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     个人管理

@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/','SessionsController@login');
-
+//Route::get('/','SessionsController@login');
+Route::get('/','ShopsController@index')->name('shops.index');
 
 Route::get('/shops/create','ShopsController@create')->name('shops.create');
 Route::get('/shops','ShopsController@index')->name('shops.index');
@@ -39,4 +39,18 @@ Route::patch('membercenters/{id}','MemberCentersController@save')->name('memberc
 //菜品分类管理
 Route::resource('menucategories','MenuCategoriesController');
 Route::resource('menus','MenusController');
+
+Route::resource('activies','ActiviesController');
+//Route::get('/activies','ActiviesController@index')->name('activies.index');
+//Route::get('/activies/{show}','ActiviesController@show')->name('activies.show');
+
+
+//接受文件上传
+Route::post('upload',function (){
+    $storage = \Illuminate\Support\Facades\Storage::disk('oss');
+    $fileName =  $storage->putFile('goods_img', request()->file('file'));
+    return [
+        'fileName'=>$storage->url($fileName)
+    ];
+})->name('upload');
 

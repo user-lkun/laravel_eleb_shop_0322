@@ -100,7 +100,7 @@
         </div>
         <div class="form-group">
             <label for="inputCategroy" class="col-sm-3 control-label">起送金额:</label>
-            <div class="col-sm-9">
+            <div class="col-sm-9 radio">
                 {{$shops_msg->start_send}}
 
             </div>
@@ -108,7 +108,7 @@
 
         <div class="form-group">
             <label for="inputCategroy" class="col-sm-3 control-label">配送费:</label>
-            <div class="col-sm-9">
+            <div class="col-sm-9 radio">
                 {{$shops_msg->send_cost}}
 
             </div>
@@ -116,7 +116,7 @@
 
         <div class="form-group">
             <label for="inputCategroy" class="col-sm-3 control-label">店公告:</label>
-            <div class="col-sm-9">
+            <div class="col-sm-9 radio">
                 {{$shops_msg->notice}}
 
             </div>
@@ -124,7 +124,7 @@
 
         <div class="form-group">
             <label for="inputCategroy" class="col-sm-3 control-label">优惠信息:</label>
-            <div class="col-sm-9">
+            <div class="col-sm-9 radio">
                 {{$shops_msg->discount}}
 
             </div>

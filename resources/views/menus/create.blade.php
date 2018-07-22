@@ -39,8 +39,20 @@
         </div>
         <div class="form-group">
             <label for="inputCategroy" class="col-sm-3 control-label">菜品图片:</label>
+            <input type="hidden" id="goods_img_url" name="goods_img">
+            <!--dom结构部分-->
+            <div id="uploader-demo">
+                <!--用来存放item-->
+                <div id="fileList" class="uploader-list"></div>
+                <div id="filePicker">选择图片</div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="inputCategroy" class="col-sm-3 control-label"></label>
             <div class="col-sm-9">
-                <input type="file" name="goods_img">
+                <img id="goods_img" src="" alt="" width="150px">
             </div>
         </div>
 
@@ -51,5 +63,45 @@
             </div>
         </div>
     </form>
+
+    <script>
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            //swf: BASE_URL + '/js/Uploader.swf',
+
+            // 文件接收服务端。
+            server:"{{route('upload')}}",
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/gif,image/jpg,image/jpeg,image/bmp,image/png'
+            },
+            formData:{
+              _token:'{{csrf_token()}}'
+            },
+        })
+        uploader.on('uploadSuccess',function (file,response) {
+            console.log(response)
+            $('#goods_img').attr('src',response.fileName)
+            $('#goods_img_url').val(response.fileName)
+        })
+    </script>
+    @stop
+
 @stop
-@stop
+
+
+
+
+
