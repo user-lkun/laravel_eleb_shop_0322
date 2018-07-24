@@ -2,14 +2,13 @@
 @section('content')
     @include('_left')
 @section('content_right')
+
     <h3>--菜品列表--</h3>
-    @foreach($menuCategories as $val)
-    <a href="{{ route('menus.index',['id'=>$val->id]) }}"class="btn btn-success">{{$val->name}}</a>
+
+    @foreach($menuCategories as $key=>$val)
+    <a id="cate_{{$key}}" href="{{ route('menus.index',['id'=>$val->id]) }}"class="btn btn-success">{{$val->name}}</a>
     @endforeach
 <div>
-    {{--<a href="{{route('activies.index',['status'=>'end'])}}"class="btn btn-danger">已结束活动</a>--}}
-
-
     <div class="pull-right">
 
         <form class="navbar-form navbar-left" action="{{route('menus.index')}}" method="get">
@@ -84,9 +83,8 @@
             </tr>
         @endforeach
     </table>
-    {{--{{$articles->appends(['author'=>$article->author])->links()}}--}}
-    {{$menus->appends($wheres)->links()}}
-    {{--{{$menus->links()}}--}}
+
+    {{$menus->appends($keywords)->links()}}
 
     @stop
 @stop

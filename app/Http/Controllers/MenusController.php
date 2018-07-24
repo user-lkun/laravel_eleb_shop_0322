@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\MenuCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MenusController extends Controller
@@ -18,31 +19,49 @@ class MenusController extends Controller
     }
 
     public function index(Request $request){
+
         $wheres = [];
+        $keywords = [];
         if($request->id){
 //            $wheres['category_id']=$request->id;
             $wheres[] = ['category_id',$request->id];
+
+            $keywords['id']=$request->id;
         }
         if ($request->keywords){
 //            $wheres['goods_name']=$request->goods_name;
             $wheres[] = ['goods_name','like','%'.$request->keywords.'%'];
+            $keywords['keywords']=$request->keywords;
+
         }
 
-        if ($request->min_price || $request->max_price){
-            $menus = Menu::where('shop_id',Auth::user()->shop_id)
-                ->where($wheres)
-                ->where('goods_price','<',$request->max_price)
-                ->where('or')
-                ->where('goods_price','>',$request->min_price)
-                ->paginate(3);
-        }else{
-            $menus = Menu::where('shop_id',Auth::user()->shop_id)
-                ->where($wheres)
-                ->paginate(3);
+        if ($request->min_price){
+            $wheres[] = ['goods_price','>',$request->min_price];
+            $keywords['min_price']=$request->min_price;
+
         }
-//dd('123');
-        $menuCategories = MenuCategories::where('shop_id',Auth::user()->shop_id)->paginate();
-        return  view('menus/index',compact('menus','menuCategories','wheres'));
+
+        if ( $request->max_price){
+            $wheres[] =[ 'goods_price','<',$request->max_price];
+            $keywords['max_price']=$request->max_price;
+        }
+//        if ($request->min_price || $request->max_price){
+//            $menus = Menu::where('shop_id',Auth::user()->shop_id)
+//                ->where($wheres)
+//                ->where('goods_price','<',$request->max_price)
+//                ->where('or')
+//                ->where('goods_price','>',$request->min_price)
+//                ->paginate(3);
+//        }
+
+            $menus = Menu::where('shop_id',Auth::user()->shop_id)
+                ->where($wheres)
+                ->paginate(3);
+
+//        $menuCategories = MenuCategories::where('shop_id',Auth::user()->shop_id)->paginate();
+        $menuCategories = DB::select('select * from menu_categories where shop_id = ?', [Auth::user()->shop_id]);
+
+        return  view('menus/index',compact('menus','menuCategories','keywords'));
     }
     public function create(){
         $menus_categories = MenuCategories::where('shop_id',Auth::user()->shop_id)->paginate();
@@ -67,9 +86,6 @@ class MenusController extends Controller
         //将图片传至阿里云
         //$storage = Storage::disk('oss');
        // $goods_img = $storage->putFile('goods_img', $request->goods_img);
-//        $file = $request->goods_img;
-//        $head_name = $file->store('public/logo');
-//        $img  = Storage::url($head_name);
        // $true_path =$storage-> url($goods_img);
 
         Menu::create([
