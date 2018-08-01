@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\MenuCategories;
+use App\Models\OrderGoods;
+use App\Models\Orders;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +32,6 @@ class MenusController extends Controller
             $keywords['id']=$request->id;
         }
         if ($request->keywords){
-//            $wheres['goods_name']=$request->goods_name;
             $wheres[] = ['goods_name','like','%'.$request->keywords.'%'];
             $keywords['keywords']=$request->keywords;
 
@@ -171,4 +173,49 @@ class MenusController extends Controller
         session()->flash('success','删除成功');
         return redirect('menus');
     }
+
+    public function show(Request $request){
+//        $wheres = [];
+//        $start_time=$request->start_time;
+//        $end_time=$request->end_time;
+//        if ($start_time) {
+//            $wheres[] = 'created_at'. '>'. $start_time;
+//        }
+//        if ($end_time){
+//            $wheres[]='created_at'.'<'.$end_time;
+//        }
+//
+//        $wheres = implode(' and ',$wheres);//数组转为字符串
+        $menus = Menu::where('shop_id',Auth::user()->shop_id)->get();//该商家的所有菜品
+
+        $orders = Orders::select('id')
+            ->where('shop_id',Auth::user()->shop_id)
+            ->where('status','!=',-1)
+            ->get();//该商家的所有未取消的订单id
+        foreach ($orders as $order_id){
+            $orders_id[]=$order_id->id;
+        }
+        ;
+        $str_id = implode(',',$orders_id);//数组转为字符串
+        if ($request->start_time){
+            $res = DB::select("select goods_id ,sum(amount) as amount from order_goods  where  created_at>'$request->start_time' and order_id in ($str_id)  group by goods_id");
+        }elseif($request->end_time){
+            $res = DB::select("select goods_id ,sum(amount) as amount from order_goods  where  created_at<'$request->end_time' and order_id in ($str_id)  group by goods_id");
+        }elseif($request->start_time && $request->end_time){
+            $res = DB::select("select goods_id ,sum(amount) as amount from order_goods  where  created_at>'$request->start_time' and created_at<'$request->end_time' and order_id in ($str_id)  group by goods_id");
+        }else{
+            $res = DB::select("select goods_id ,sum(amount) as amount from order_goods  where   order_id in ($str_id)  group by goods_id");
+        }
+
+        foreach ($menus as $menu){
+            foreach ($res as $val){
+                if ($menu->id==$val->goods_id){
+                    $menu['amount'] =$val->amount;//将商品总数添加至$menus里面
+                }
+            }
+        }
+        return view('menus/count',compact('menus'));
+    }
+
+
 }

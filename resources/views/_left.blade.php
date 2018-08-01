@@ -39,6 +39,18 @@
                 <ul class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop3">
                     <li><a href="{{ route('menus.index') }}">菜品列表</a></li>
                     <li><a href="{{ route('menus.create') }}">添加菜品</a></li>
+                    <li><a href="{{route('menus.count')}}">菜品销量统计</a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group" role="group">
+                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    订单管理
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop3">
+                    <li><a href="{{ route('orders.index') }}">订单列表</a></li>
+
                 </ul>
             </div>
 

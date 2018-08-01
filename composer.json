@@ -1,12 +1,4 @@
-{
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
-    "type": "project",
-    "require": {
-        "php": ">=7.0.0",
-        "fideloper/proxy": "~3.3",
+
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
@@ -20,7 +12,7 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "mews/captcha": "~2.0",
-        "overtrue/laravel-ueditor": "~1.0"
+        "overtrue/laravel-ueditor": "~1.0",
         "laravel/tinker": "~1.0",
         "mews/captcha": "~2.0"
     },

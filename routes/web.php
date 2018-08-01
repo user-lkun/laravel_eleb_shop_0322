@@ -82,4 +82,13 @@ Route::patch('membercenters/{id}','MemberCentersController@save')->name('memberc
 //菜品分类管理
 Route::resource('menucategories','MenuCategoriesController');
 Route::resource('menus','MenusController');
+Route::get('/menus/count','MenusController@show')->name('menus.count');
+
+
+//订单管理
+Route::get('/orders','OrdersController@index')->name('orders.index');
+Route::get('/orders/{order}','OrdersController@show')->name('orders.show');
+Route::get('/orders/{status}/edit','OrdersController@edit')->name('orders.edit');
+Route::post('/orders','OrdersController@count')->name('orders.count');
+//
 

@@ -21,12 +21,12 @@ class Menu extends Model
         'goods_img',
     ];
 
-    //建立菜品表和商家的关系 一对一(某一个商家只对应一个店铺)
+    //建立菜品表和商家的关系 一对一(一个菜品只对应一个商家)
     public function shops(){
         return $this->hasOne(Shops::class, 'id', 'shop_id');
     }
 
-    //建立菜品表和菜品分类的关系 一对一(某一个商家只对应一个店铺)
+    //建立菜品表和菜品分类的关系 一对一(某一个菜品只对应一个分类)
     public function menu_categories(){
         return $this->hasOne(MenuCategories::class, 'id', 'category_id');
     }

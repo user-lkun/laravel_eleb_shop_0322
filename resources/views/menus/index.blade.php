@@ -28,8 +28,8 @@
             <th>菜品ID</th>
             <th>菜品名称</th>
             <th>评分</th>
-            <th>所属商家ID</th>
-            <th>所属菜品分类ID</th>
+            <th>所属商家</th>
+            <th>所属菜品分类</th>
             <th>价格</th>
             <th>描述</th>
             <th>月销量</th>
