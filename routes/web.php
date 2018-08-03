@@ -41,8 +41,10 @@ Route::resource('menucategories','MenuCategoriesController');
 Route::resource('menus','MenusController');
 
 Route::resource('activies','ActiviesController');
-//Route::get('/activies','ActiviesController@index')->name('activies.index');
-//Route::get('/activies/{show}','ActiviesController@show')->name('activies.show');
+Route::get('events','EventsController@index')->name('events.index');
+Route::get('events/{event}','EventsController@show')->name('events.show');
+Route::get('events/apply/{event}','EventsController@apply')->name('events.apply');
+Route::get('events/result/{event}','EventsController@result')->name('events.result');
 
 
 //接受文件上传

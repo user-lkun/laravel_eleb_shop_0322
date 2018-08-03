@@ -107,7 +107,7 @@
 @include('_errors')
 {{--显示错误信息--}}
 @include('_message')
-    <div class="container" style="padding: 20px 10px ;background-color: rgba(90,47,180,0.29)">
+    <div class="container-fluid" style="padding: 20px 10px ;background-color: rgba(90,47,180,0.29)">
 
         <div class="bs-example col-lg-2" data-example-id="vertical-button-group" style="">
             @yield('content')

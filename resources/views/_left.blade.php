@@ -7,7 +7,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop3">
                     <li><a href="{{route('activies.index')}}">查看活动列表</a></li>
-                    {{--<li><a href="{{route('articies.show')}}">点击查看活动详情</a></li>--}}
+                    <li><a href="{{route('events.index')}}">平台抽奖活动</a></li>
                 </ul>
             </div>
 
