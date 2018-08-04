@@ -6,7 +6,7 @@
     <a href="{{route('events.index') }}" class="btn btn-success">返回</a>
     @if(\App\Models\EventShops::where([
                       ['events_id',$event->id],
-                       ['shop_id',auth()->user()->shop_id],
+                       ['shop_id',auth()->user()->id],
                        ])->count()==0)
             @if(time()>=$event->signup_start && time()<=$event->signup_end)
             <a href="{{route('events.apply',[$event->id])}}" title="报名" class="btn ">

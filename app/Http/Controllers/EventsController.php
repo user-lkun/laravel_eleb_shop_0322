@@ -19,7 +19,7 @@ class EventsController extends Controller
     }
     public function apply(Events $event){//商家报名
         $events_id = $event->id;
-        $shop_id = Auth::user()->shop_id;
+        $shop_id = Auth::user()->id;
         $num = Events::where('id',$events_id)->value('signup_num');//人数上限
         $apply_num = EventShops::where('events_id',$events_id)->count();//报名人数
         if ($apply_num>=$num){
