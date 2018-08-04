@@ -8,9 +8,13 @@
                       ['events_id',$event->id],
                        ['shop_id',auth()->user()->shop_id],
                        ])->count()==0)
-        <a href="{{route('events.apply',[$event->id])}}" title="报名" class="btn ">
-            <span class="btn btn-success">立即报名</span>
-        </a>
+            @if(time()>=$event->signup_start && time()<=$event->signup_end)
+            <a href="{{route('events.apply',[$event->id])}}" title="报名" class="btn ">
+                <span class="btn btn-success">立即报名</span>
+            </a>
+            @else
+            <span class="btn btn-success">报名未开始</span>
+            @endif
     @else
         <span class="btn btn-success" disabled="">已报名</span>
     @endif
