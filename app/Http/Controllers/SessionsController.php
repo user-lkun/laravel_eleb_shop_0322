@@ -33,6 +33,9 @@ class SessionsController extends Controller
         $sta1 = DB::table('shop_users')->where('name', $request->name)->value('status');
         //获取店铺状态
         $sta2 = DB::select("select shops.status from shops JOIN shop_users on shops.id=shop_users.shop_id WHERE shop_users.name='$request->name'");
+        if ($sta1==null ||$sta2==null){
+            return  redirect('login')->with('danger','该商家不存在!');
+        }
         $sta2 = $sta2[0]->status;
 //        dd($sta2);
         if ($sta1!=1 || $sta2!=1){
